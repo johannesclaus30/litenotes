@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -11,7 +13,8 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        $notes = Note::where('user_id', Auth::id())->latest('updated_at')->paginate(1);
+        return view('notes.index')->with('notes', $notes);
     }
 
     /**
